@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  Faculty - คณาจารย์หลักสูตรฟิสิกส์อุตสาหกรรม</title>
+    <style>
+        /* --- 1. ตั้งค่าพื้นฐาน --- */
+        body {
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            background-color: #000000;
+        }
+
+        .title {
+            color: rgb(184, 41, 255);
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        .main-header {
+            background-color: rgb(184, 41, 255);
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .page-title {
+            background-color: rgb(184, 41, 255);
+            color: #fcfbfb;
+            width: fit-content;
+            margin: 30px auto 10px auto;
+            padding: 10px 40px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        /* --- กล่องค้นหา (Search Bar) แบบ Responsive --- */
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        #searchInput {
+            width: 50%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            border-color:rgb(184, 41, 255);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- 2. การจัดวาง Grid --- */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px;
+        }
+
+        .faculty-card {
+            background: white;
+            border: 1px solid #ddd;
+            text-align: center;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .faculty-card:hover { transform: translateY(-5px); }
+
+        .image-box img {
+            width: 100%;
+            aspect-ratio: 3 / 4; /* บังคับสัดส่วน กว้าง 3 ส่วน สูง 4 ส่วน (ทรงรูปติดบัตร) */
+            object-fit: cover; /* สั่งให้ซูมภาพให้เต็มกรอบและตัดส่วนที่ล้นออก */
+            object-position: top; /* เน้นจัดตำแหน่งให้โชว์ส่วนบน (หน้าอาจารย์) เป็นหลัก */
+            display: block;
+            cursor: pointer;
+        }
+
+        .info-box {
+            padding: 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .info-box .name { font-weight: bold; margin-bottom: 2px; }
+        .info-box .en-name { font-style: italic; font-size: 0.85rem; margin-bottom: 8px; }
+
+        /* --- 3. ระบบ Responsive --- */
+        @media (max-width: 992px) {
+            .faculty-grid { grid-template-columns: repeat(2, 1fr); }
+            #searchInput { width: 70%; }
+        }
+
+        @media (max-width: 768px) {
+            .faculty-grid { grid-template-columns: repeat(1, 1fr); }
+            .page-title { font-size: 1.2rem; padding: 10px 20px; }
+            .modal-content { width: 90%; padding: 20px; }
+            #searchInput { width: 90%; }
+        }
+
+        /* --- 4. ระบบ Pop-up (Modal) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px; 
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            text-align: left;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+        .close-btn:hover { color: red; }
+
+        .pdf-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .pdf-btn:hover { background-color: #2980b9; }
+
+        .modal-section-title {
+            color: #5c6bc0;
+            margin-bottom: 5px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        .physics-staff-section {
+            width: 100%;
+            margin-top: 50px; /* ดันให้ห่างจากตู้หนังสือด้านบน */
+        }
+
+        .section-title {
+            color: rgb(255, 255, 255); 
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        .orange-divider {
+            border: none;              
+            height: 3px;               
+            background-color: rgb(184, 41, 255); 
+            width: 100%;               
+            margin: 40px 0 20px 0; /* บน 40 ขวา 0 ล่าง 20 ซ้าย 0 */
+        }
+
+        /* --- จัดการ์ดคนสุดท้ายให้อยู่กึ่งกลางแถว --- */
+        .center-last-card {
+            grid-column: 1 / -1; /* กินพื้นที่ตั้งแต่ซ้ายสุดยันขวาสุด */
+            justify-self: center; /* ดันตัวเองมาอยู่ตรงกลาง */
+            
+            /* 🔴 ใช้สูตรคำนวณแทนการเดาตัวเลข */
+            /* สมมติว่า gap ของคุณคือ 30px จะมีช่องว่างกั้นกลาง 3 ช่อง (30 x 3 = 90px) */
+            width: calc((100% - 60px) / 3); 
+            
+            /* ปลดล็อกข้อจำกัดเก่าทิ้งไปเลย */
+            max-width: none; 
+        }
+
+
+
+    </style>
+
+    
+</head>
+<body>
+
+    <header class="main-header">
+        <a href="faculty.html" style="color: white; text-decoration: none;">❮ Faculty</a>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">คณาจารย์หลักสูตรฟิสิกส์อุตสาหกรรม</h1>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" onkeyup="filterFaculty()" placeholder="ค้นหาชื่ออาจารย์ (ภาษาไทย หรือ อังกฤษ)...">
+        </div>
+
+        <div class="faculty-grid" id="facultyGrid">
+            
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei/Screenshot_22-2-2026_153549_www.iote.kmitl.ac.th.jpeg" alt="รศ.ดร.ภัทรียา ดำรงศักดิ์"
+                         onclick="openModal('รศ.ดร.ภัทรียา ดำรงศักดิ์', '– Doctor of Philosophy/Engineering Materials University of Southampton อังกฤษ', '– OPTICAL SPECTROSCOPY\n– SILICON PHOTOVOLTAICS\n- FLUORESCENT CONCENTRATORS\n– THIN FILM LUMINESCENCE\n– FLUORESCENCE SPECTROSCOPY', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.ภัทรียา ดำรงศักดิ์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Pattareeya Damringsak</p>
+                    <p class="position">ตำแหน่ง : หัวหน้าภาควิชาฟิสิกส์</p>
+                    <p class="email">e-mail : pattareeya.da@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei/Screenshot 2026-02-23 201015.png" alt="อาจารย์ท่านที่ 2"
+                         onclick="openModal('รศ.ดร.สาหร่าย เล็กชะอุ่ม', '–– ปริญญาโท/วศ.ม.(นิวเคลียร์เทคโนโลยี) จุฬาลงกรณ์มหาวิทยาลัย', '– STIRLING ENGINE\n– TISSUE\n– SIMULATION\n– MEASURING METHOD\n– INTERNET OF THING TECHNOLOGY', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.สาหร่าย เล็กชะอุ่ม</p>
+                    <p class="en-name">Assoc.Prof.Dr.Sarai Lekchao-um</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : sarai.le@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei/Screenshot_23-2-2026_201650_www.iote.kmitl.ac.th.jpeg" alt="รศ.ดร.รัชนก สมพรเสน่ห์"
+                         onclick="openModal('รศ.ดร.รัชนก สมพรเสน่ห์', '– Doctor of Philosophy/Physics, University at Buffalo,The State University of NY สหรัฐอเมริกา', '– NANOELECTRONICS\n– 2D MATERIALS\n– GRAPHENE\n– QUANTUM TRANSPORT PHENOMENA\n– ELECTRICAL CHARACTERIZATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.รัชนก สมพรเสน่ห์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Ratchanok Somprasert</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : ratchanok.so@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei/Screenshot_23-2-2026_20257_www.iote.kmitl.ac.th.jpeg" alt="ผศ.ดร.ศ.ทิพวรรณ คล้ายบุญมี"
+                         onclick="openModal('ผศ.ดร.ศ.ทิพวรรณ คล้ายบุญมี', '– วท.บ. ฟิสิกส์ประยุกต์, สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง,\n– วท.ม. ฟิสิกส์ประยุกต์, สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง,\n– ปร.ด. ฟิสิกส์ประยุกต์, สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', '', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.ศ.ทิพวรรณ คล้ายบุญมี</p>
+                    <p class="en-name">Asst.Prof.Dr.Tipawan Klaibunme</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : tipawan.kl@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei/Screenshot_23-2-2026_21743_www.iote.kmitl.ac.th.jpeg" alt="ดร.พิชชานันท์ ธีเศรษฐ์โศภน"
+                         onclick="openModal('ดร.พิชชานันท์ ธีเศรษฐ์โศภน', '– วท.บ. ฟิสิกส์, มหาวิทยาลัยเกษตรศาสตร์\n– วท.ม. ฟิสิกส์เชิงเคมี, มหาวิทยาลัยมหิดล\n– Ph.D. Energy, สถาบันเทคโนโลยีแห่งเอเซีย', '', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ดร.พิชชานันท์ ธีเศรษฐ์โศภน</p>
+                    <p class="en-name">Dr.Pichchanan Theesophon</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : pichchanan.th@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\Screenshot_24-2-2026_94154_www.iote.kmitl.ac.th.jpeg" alt="ผศ.ดร.เมตยา กิติวรรณ"
+                         onclick="openModal('ผศ.ดร.เมตยา กิติวรรณ', '– Ph.D.(Materials Processing), Tohoku University, Japan', '– NANO-COATING BY ROTARY CHEMICAL VAPOR DEPOSITION\n– SINTERING OF ADVANCED CERAMICS\n– MICROWAVE PROCESSING OF MATERIALS\n– HYDROGEN SEPARATION MEMBRANE', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.เมตยา กิติวรรณ</p>
+                    <p class="en-name">Asst.Prof.Dr.Mettaya Kitiwan</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : metaya.ki@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei/Screenshot_23-2-2026_204812_www.iote.kmitl.ac.th.jpeg" alt="รศ.ดร.อาภาภรณ์ สกุลการะเวก"
+                         onclick="openModal('รศ.ดร.อาภาภรณ์ สกุลการะเวก', '– วิทยาศาสตรดุษฎีบัณฑิต/ฟิสิกส์ จุฬาลงกรณ์มหาวิทยาลัย','– THIN FILM\n– THERMOELECTRIC MATERIAL\n– THERMAL PROPERTY\n– MATERIAL SCIENCE\n– MATERIAL CHARACTERIZATION', '', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.อาภาภรณ์ สกุลการะเวก</p>
+                    <p class="en-name">Assoc.Prof.Dr.Aphaporn Sookkum</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : aphaporn.so@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\Screenshot 2026-02-24 092315.png" alt="ผศ.ธนภรณ์ ลีลาวัฒนานนท์"
+                         onclick="openModal('ผศ.ธนภรณ์ ลีลาวัฒนานนท์', '– วท.ม./เทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', '– MODELING AND SIMULATION\n– SURFACE PLASMONS\n– OPTICAL DATA COMMUNICATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ธนภรณ์ ลีลาวัฒนานนท์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Thanaphon Leelavatnanont</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : tanaporn.le@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\Screenshot_24-2-2026_93059_www.iote.kmitl.ac.th.jpeg" alt="ผศ.สุรศักดิ์ พิพัฒน์ศาสตร์"
+                         onclick="openModal('ผศ.สุรศักดิ์ พิพัฒน์ศาสตร์', '– วท.ม.(ฟิสิกส์ประยุกต์) สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', '– OPTICS\n– ENERGY', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.สุรศักดิ์ พิพัฒน์ศาสตร์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Suratsak Pimpun</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail :</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\p.patan.jpeg" alt="ผศ.ดร.ประธาน บุรณศิริ"
+                         onclick="openModal('ผศ.ดร.ประธาน บุรณศิริ', '– Doctor of Philosophy/Electrical Engineering ,University of Dayton, USA', '– QUANTITATIVE PHASE IMAGING\n– DIGITAL HOLOGRAPHY\n– NONLINEAR OPTIC\n– LASER STABILIZEATION\n– PHOTONIC CRYSTAL\n– METAMATERIAL\n– METAMATERIAL-MEDICAL PHYSICS\n– APPLICATIONS OF SYNCHROTRON RADIATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.ประธาน บุรณศิริ</p>
+                    <p class="en-name">Asst.Prof.Dr.Prathan Buranasiri</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : prathan.bu@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อจ.ธรรมรัตน์.jpeg" alt="อ.ธรรมรัตน์ แต่งตั้ง"
+                         onclick="openModal('อ.ธรรมรัตน์ แต่งตั้ง', '– วศ.ม.วิศวกรรมไฟฟ้า สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', '– IMAGE PROCESSING\n– DATA PROCESSING\n– NP-HARD PROBLEM\n– ARTIFICIAL INTELLIGENCE\n– OPTIMIZATION PROBLEM', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">อ.ธรรมรัตน์ แต่งตั้ง</p>
+                    <p class="en-name">Aj.Thammarat Taengtang</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : thammarat.ta@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อจ.สุชาติ.jpeg" alt="อ.สุรชาติ กมลดิลก"
+                         onclick="openModal('อ.สุรชาติ กมลดิลก', '– ปริญญาโท/วท.ม.(สาขาฟิสิกส์ประยุกต์)\nสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', 
+                         '– LASERS\n– OPTICAL INSTRUMENTS\n– PHOTONICS\n– FORENSIC SCIENCE\n– PHYSICS EDUCATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">อ.สุรชาติ กมลดิลก</p>
+                    <p class="en-name">Aj.Surachart Kamoldilok</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : kamoldiloks@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\จาร์ยเต้.jpeg" alt="ผศ.ดร.ณัฐพร พรหมรส"
+                         onclick="openModal('ผศ.ดร.ณัฐพร พรหมรส', '– Doctor of Engineering/Applied Science fro Electronics and Materials\nKyushu University. ญี่ปุ่น', 
+                         '– THIN FILM\n– THERMOELECTRIC MATERIAL\n– THERMAL PROPERTY\n– MATERIAL SCIENCE\n– MATERIAL CHARACTERIZATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.ณัฐพร พรหมรส</p>
+                    <p class="en-name">Asst.Prof.Dr.Nathaporn Promros</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : kpnathap@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อจ.เชรษฐ.jpeg" alt="รศ.ดร.เชรษฐา รัตนพันธ์"
+                         onclick="openModal('รศ.ดร.เชรษฐา รัตนพันธ์', '– ปรัชญาดุษฎีบัณฑิต/ฟิสิกส์ประยุกต์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', 
+                         '– SYNTHESIS\n– CHARACTERIZATION\n– IMPROVEMENT OF THERMOELECTRIC MATERIALS', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.เชรษฐา รัตนพันธ์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Chesta Ruttanapun</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : chesta.ru@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\กฤษกร.jpeg" alt="รศ.ดร.กฤษกร โล้เจริญรัตน์"
+                         onclick="openModal('รศ.ดร.กฤษกร โล้เจริญรัตน์', '– Ph.D./ Physical Materials Science , Japan Advanced Institute of Science\nand Technology, 2550, Japan', 
+                         '– CANCER\n– PLASMONIC\n– NANOPARTICLES', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.กฤษกร โล้เจริญรัตน์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Kitsakorn Locharoenrat</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : kitsakorn.lo@kmitl.ac.th</p>
+                </div>
+            </div>
+
+             <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\กฤษกร.jpeg" alt="รศ.ดร.กฤษกร โล้เจริญรัตน์"
+                         onclick="openModal('รศ.ดร.กฤษกร โล้เจริญรัตน์', '– Ph.D./ Physical Materials Science , Japan Advanced Institute of Science\nand Technology, 2550, Japan', 
+                         '– CANCER\n– PLASMONIC\n– NANOPARTICLES', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">รศ.ดร.กฤษกร โล้เจริญรัตน์</p>
+                    <p class="en-name">Assoc.Prof.Dr.Kitsakorn Locharoenrat</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : kitsakorn.lo@kmitl.ac.th</p>
+                </div>
+            </div>
+
+             <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อ.ภาณุพล.jpeg" alt="ผศ.ดร.ภาณุพล โขลนกระโทก"
+                         onclick="openModal('ผศ.ดร.ภาณุพล โขลนกระโทก', '– วิศวกรรมศาสตรดุษฎีบัณฑิต/วิศวกรรมไฟฟ้า\nสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', 
+                         '– MEASUREMENT AND INSTRUMENTATIONS\n– FORENSIC SCIENCE\n– IMAGE PROCESSING\n– SPORT SCIENCE\n– COMPUTER AND ELECTRONICS IN AGRICULTURE', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.ภาณุพล โขลนกระโทก</p>
+                    <p class="en-name">Asst.Prof.Dr.Bhanupol Klongratog</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : bhanupol.kl@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อ.พิศาล.jpeg" alt="ผศ.ดร.พิศาล สุขวิสูตร"
+                         onclick="openModal('ผศ.ดร.พิศาล สุขวิสูตร', '– ปรัชญาดุษฎีบัณฑิต/ฟิสิกส์ มหาวิทยาลัยสงขลานครินทร์', 
+                         '– PIEZOELECTRIC MATERIAL\n– ENERGY HARVESTING SENSOR\n– IMAGE PROCESSING\n– MATERIAL CHARACTERIZATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.พิศาล สุขวิสูตร</p>
+                    <p class="en-name">Asst.Prof.Dr.Pisan Sukwisute</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail : pisan.su@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อ.ชิน.jpeg" alt="ดร.ชินพรรธน์ รัตนศิรวิทย์"
+                         onclick="openModal('ดร.ชินพรรธน์ รัตนศิรวิทย์', '– Ph.D. Physics North Carolina State University, USA', 
+                         '– SURFACE PLASMONIC RESONANCE\n– NANOTECHNOLOGY\n– OPTICAL SENSOR\n– SMART FARMING\n– STEM EDUCATION', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ดร.ชินพรรธน์ รัตนศิรวิทย์</p>
+                    <p class="en-name">Dr.Sinphong Rattanawichit</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail :  woraka.ne@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อกีรยุทธ์.jpeg" alt="ผศ.ดร.กีรยุทธ์ ศรีนวลจันทร์"
+                         onclick="openModal('ผศ.ดร.กีรยุทธ์ ศรีนวลจันทร์', '– วท.ม.(ฟิสิกส์ประยุกต์)/ฟิสิกส์ประยุกต์\nสถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง', 
+                         '', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.กีรยุทธ์ ศรีนวลจันทร์</p>
+                    <p class="en-name">Asst.Prof.Dr.Keerayoot Srinuanjan</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail :  keerayoot.sr@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\อ.วิฑูรย์.jpeg" alt="ดร.วิฑูรย์ ยินดีสุข"
+                         onclick="openModal('ดร.วิฑูรย์ ยินดีสุข', '– Doctor of Philosophy/Engineering Science,\nThe University of Electro-Communications, Japan', 
+                         '– SOLAR CELLS\n– QUANTUM DOTS\n– SOLAR ENERGY\n– THIN FILMS\n– SILAR METHODS', '')">
+                </div>
+                <div class="info-box">
+                    <p class="name">ดร.วิฑูรย์ ยินดีสุข</p>
+                    <p class="en-name">Dr.Witoon Yindeesuk</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail :  witoon.yi@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\ณัฏกฤษ.jpeg" alt="ผศ.ดร.ณัฏกฤษ สมดอก">
+                         
+                </div>
+                <div class="info-box">
+                    <p class="name">ผศ.ดร.ณัฏกฤษ สมดอก</p>
+                    <p class="en-name">Asst.Prof.DrNatukrit Somdok</p>
+                    <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+                    <p class="email">e-mail :   nuttakrit.so@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+    <div class="image-box">
+        <img src="sensei\อ.ลัญจกร.jpeg" alt="ดร.ลัญจกร ตันนุกิจ">
+    </div>
+    
+    <div class="info-box">
+        <p class="name">ดร.ลัญจกร ตันนุกิจ</p>
+        <p class="en-name">Asst.Prof.DrLanjarat Tannukij</p>
+        <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+        <p class="email">e-mail :  Lunchakurn.ta@kmitl.ac.th</p>
+    </div>
+</div>
+
+ <div class="faculty-card">
+    <div class="image-box">
+        <img src="sensei\ดร.เฉลิมพล.jpeg" alt="ดร.เฉลิมพล รุจรดาวงศ์">
+    </div>
+    
+    <div class="info-box">
+        <p class="name">ดร.เฉลิมพล รุจรดาวงศ์</p>
+        <p class="en-name">Dr. Chalermpol Rudradawong</p>
+        <p class="position">ตำแหน่ง : อาจารย์ผู้รับผิดชอบหลักสูตร</p>
+        <p class="email">e-mail :  chalermpol.ru@kmitl.ac.th</p>
+    </div>
+</div>
+
+</div> <div class="physics-staff-section">
+            <hr class="orange-divider">
+            <h2 class="title">บุคลากรหลักสูตรฟิสิกส์อุตสาหกรรม</h2>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="faculty-grid" id="staffGrid">
+            
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\นักวิทยฺสาย.jpeg" alt="นางสาวสายสุดาวัลย์ สุทธิญาณ">
+                </div>
+                <div class="info-box">
+                    <p class="name">นางสาวสายสุดาวัลย์ สุทธิญาณ</p>
+                    <p class="en-name">Saisudawan Suttiyan</p>
+                    <p class="position">ตำแหน่ง : นักวิทยาศาสตร์</p>
+                    <p class="email">e-mail :  saisudawan1@hotmail.com</p>
+                </div>
+            </div>
+
+           <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\นักวิทย์พิม.jpeg" alt="นางพิมพร อ่อนละออ">
+                </div>
+                <div class="info-box">
+                    <p class="name">นางพิมพร อ่อนละออ</p>
+                    <p class="en-name">Mrs.Pimporn Onlaor</p>
+                    <p class="position">ตำแหน่ง : นักวิทยาศาสตร์</p>
+                    <p class="email">e-mail :  pimporn.be@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\พี่ฝน.jpeg" alt="น.ส.นลิตา สว่างจิตต์">
+                </div>
+                <div class="info-box">
+                    <p class="name">น.ส.นลิตา สว่างจิตต์</p>
+                    <p class="en-name">Miss Nalita Sawangjit</p>
+                    <p class="position">ตำแหน่ง : นักวิทยาศาสตร์</p>
+                    <p class="email">e-mail :  nalita.sa@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\จน.เกศ.jpeg" alt="น.ส.เกศณี เกตุนวม">
+                </div>
+                <div class="info-box">
+                    <p class="name">น.ส.เกศณี เกตุนวม</p>
+                    <p class="en-name">Miss Kesanee Ketnuam</p>
+                    <p class="position">ตำแหน่ง :  เจ้าหน้าบริหารงานทั่วไป เลขานุการ</p>
+                    <p class="email">e-mail :  kesanee.ke@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\นักวิทย์วีระ.jpeg" alt="นายวีระพันธ์ ทิพาพงศ์">
+                </div>
+                <div class="info-box">
+                    <p class="name">นายวีระพันธ์ ทิพาพงศ์</p>
+                    <p class="en-name">Mr.Weraphan Tipaphong</p>
+                    <p class="position">ตำแหน่ง : นักวิทยาศาสตร์</p>
+                    <p class="email">e-mail :   weraphan.ti@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card">
+                <div class="image-box">
+                    <img src="sensei\นักวิทย์ชวนนท์.jpeg" alt="นายชวนนท์ มะโน">
+                </div>
+                <div class="info-box">
+                    <p class="name">นายชวนนท์ มะโน</p>
+                    <p class="en-name">Mr.Chawanon Mano</p>
+                    <p class="position">ตำแหน่ง : นักวิทยาศาสตร์</p>
+                    <p class="email">e-mail :   chawanon.ma@kmitl.ac.th</p>
+                </div>
+            </div>
+
+            <div class="faculty-card center-last-card">
+                <div class="image-box">
+                    <img src="sensei\นักวิทย์สาโรจน์.jpeg" alt="นายสาโรจน์ ชูอำไพ">
+                </div>
+                <div class="info-box">
+                    <p class="name">นายสาโรจน์ ชูอำไพ</p>
+                    <p class="en-name">Mr.Saorj Chooampai</p>
+                    <p class="position">ตำแหน่ง : นักวิทยาศาสตร์</p>
+                    <p class="email">e-mail :   saroj.ch@kmitl.ac.th</p>
+                </div>
+            </div>
+
+        </div> ```
+
+   
+        
+
+      
+
+    <div id="thesisModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">✖</span>
+            <h2 id="modalName" style="color: #f39c12; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px;">ชื่ออาจารย์</h2>
+            
+            <h4 class="modal-section-title">ประวัติการศึกษา</h4>
+            <p id="modalEdu" style="line-height: 1.6; white-space: pre-line; margin-top: 0;"></p>
+            
+            <h4 id="expertTitle" class="modal-section-title">ความเชี่ยวชาญ</h4>
+            <p id="modalExpert" style="line-height: 1.6; white-space: pre-line; margin-top: 0;"></p>
+            
+            <a id="modalPdfLink" href="#" target="_blank" class="pdf-btn" style="display: none;">
+                ดูเอกสารเพิ่มเติม / ลิงก์ภายนอก
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ฟังก์ชันค้นหารายชื่ออาจารย์
+        function filterFaculty() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let cards = document.getElementsByClassName("faculty-card");
+
+            let isSearching = input.trim() !== "";
+
+            for (let i = 0; i < cards.length; i++) {
+                let thaiName = cards[i].getElementsByClassName("name")[0].innerText.toLowerCase();
+                let engName = cards[i].getElementsByClassName("en-name")[0].innerText.toLowerCase();
+
+                if (thaiName.indexOf(input) > -1 || engName.indexOf(input) > -1) {
+                    cards[i].style.display = ""; 
+                } else {
+                    cards[i].style.display = "none"; 
+                }
+            
+
+            if (cards[i].classList.contains("center-last-card")) {
+                    if (isSearching) {
+                        // ถ้ากำลังค้นหา: ให้ริบตั๋ว VIP บังคับให้ทำตัวเหมือนการ์ดปกติ
+                        cards[i].style.gridColumn = "auto";
+                        cards[i].style.justifySelf = "auto";
+                        cards[i].style.width = "100%";
+                    } else {
+                        // ถ้าลบคำค้นหาออกหมดแล้ว: ให้คืนตั๋ว VIP กลับไปอยู่ตรงกลางเหมือนเดิม
+                        cards[i].style.gridColumn = "1/-1";
+                        cards[i].style.justifySelf = "center";
+                        cards[i].style.width = "calc((100% - 60px) / 3)";
+                    }
+
+                }
+            }
+        }
+
+        
+
+
+        // ระบบ Pop-up
+        function openModal(profName, eduText, expertText, pdfUrl) {
+            
+            document.getElementById("modalName").innerText = profName;
+            document.getElementById("modalEdu").innerText = eduText;
+            document.getElementById("modalExpert").innerText = expertText;
+            
+            let expertTitleNode = document.getElementById("expertTitle");
+            let expertContentNode = document.getElementById("modalExpert");
+            
+            if (expertText && expertText.trim() !== "") {
+                expertTitleNode.style.display = "block";
+                expertContentNode.style.display = "block";
+            } else {
+                expertTitleNode.style.display = "none";
+                expertContentNode.style.display = "none";
+            }
+            
+            let pdfBtn = document.getElementById("modalPdfLink");
+            if (pdfUrl && pdfUrl !== "") {
+                pdfBtn.href = pdfUrl;
+                pdfBtn.style.display = "inline-block";
+            } else {
+                pdfBtn.style.display = "none";
+            }
+
+            document.getElementById("thesisModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("thesisModal").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
