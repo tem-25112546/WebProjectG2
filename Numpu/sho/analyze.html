@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Analyzer Pro | Cyber Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="main-header">
+        <button class="btn-back-home" onclick="window.location.href='../About_PhysIoT.html'">⬅ ย้อนกลับ</button>
+        <h1 class="header-title">วิเคราะห์อาชีพ</h1>
+    </header>
+
+    <main class="container">
+        <p class="instruction">เลือกวิชาที่คุณสนใจ (เลือกได้สูงสุด 3 วิชา)</p>
+
+        <div class="subject-grid">
+            <label class="subject-item"><input type="checkbox" name="subject" value="programming"> COMPUTER
+                PROGRAMMING</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="iot"> INTRODUCTION TO IOT</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="digital"> DIGITAL SYSTEM
+                DESIGN</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="circuits"> CIRCUITS AND
+                ELECTRONICS</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="security"> CYBER SECURITY
+                SYSTEMS</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="sensors"> SENSORS AND
+                TRANSDUCERS</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="micro"> MICROCONTROLLER</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="mobile"> MOBILE APPLICATION</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="interaction"> INTERACTION
+                DESIGN</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="em_field"> ELECTROMAGNETIC
+                FIELD</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="physics_app"> PHYSICS AND
+                APPLICATIONS</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="mechanics"> MECHANICS</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="modern_physics"> MODERN
+                PHYSICS</label>
+            <label class="subject-item"><input type="checkbox" name="subject" value="math_physics"> MATH FOR
+                PHYSICS</label>
+        </div>
+
+        <button class="analyze-btn" onclick="analyzeCareer()">วิเคราะห์อาชีพ</button>
+
+        <div id="result-container" class="result-area"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

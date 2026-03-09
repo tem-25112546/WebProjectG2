@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Plan - Interactive</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+    <a href="../About_PhysIoT.html" class="btn-back-home">⬅ ย้อนกลับไปหน้า About IoT</a>
+
+    <h1>แผนการศึกษา : หลักสูตรฟิสิกส์อุตสาหกรรมและวิศวกรรมระบบไอโอทีและสารสนเทศ</h1>
+
+    <div class="plan-container" id="planContainer">
+        <svg id="arrowLayer"></svg>
+
+        <div class="year-column">
+            <div class="year-header y1">ปี 1</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-yellow" id="cal1" onclick="goToSubject('Calculus 1')">Calculus 1</div>
+                    <div class="course border-yellow" id="phy1" onclick="goToSubject('Physics 1')">Physics 1</div>
+                    <div class="course border-yellow" id="phyLab1" onclick="goToSubject('Physics Lab 1')">Physics Lab 1</div>
+                    <div class="course border-yellow" onclick="goToSubject('General Biology')">General Biology</div>
+                    <div class="course border-yellow" onclick="goToSubject('General Biology Lab')">General Biology Lab</div>
+                    <div class="course border-blue" onclick="goToSubject('Drawing and Workshop')">Drawing and Workshop</div>
+                    <div class="course border-blue" onclick="goToSubject('Computer Programming')">Computer Programming</div>
+                    <div class="course border-blue" onclick="goToSubject('Introduction to IoT')">Introduction to IoT</div>
+                    <div class="course border-orange" onclick="goToSubject('Software Application for Business')">Software Application for Business</div>
+                    <div class="course border-orange" id="eng1" onclick="goToSubject('Found English 1')">Found English 1</div>
+                    <div class="course border-orange" onclick="goToSubject('Charm School')">Charm School</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-yellow" id="cal2" onclick="goToSubject('Calculus 2')">Calculus 2</div>
+                    <div class="course border-yellow" id="phy2" onclick="goToSubject('Physics 2')">Physics 2</div>
+                    <div class="course border-yellow" id="phyLab2" onclick="goToSubject('Physics Lab 2')">Physics Lab 2</div>
+                    <div class="course border-blue" id="fundDigi" onclick="goToSubject('Fundamental Digital System')">Fundamental Digital System</div>
+                    <div class="course border-blue" id="circuits" onclick="goToSubject('Circuit and Electronics')">Circuit and Electronics</div>
+                    <div class="course border-blue" onclick="goToSubject('Object-Oriented Data Structure')">Object-Oriented Data Structure</div>
+                    <div class="course border-orange" onclick="goToSubject('Digital Citizen')">Digital Citizen</div>
+                    <div class="course border-orange" onclick="goToSubject('Pre-Activities For Engineers')">Pre-Activities For Engineers</div>
+                    <div class="course border-orange" id="eng2" onclick="goToSubject('Found English 2')">Found English 2</div>
+                    <div class="course border-orange" onclick="goToSubject('Team Project 1')">Team Project 1</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y2">ปี 2</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-yellow" onclick="goToSubject('MATH FOR PHYSICISTS')">MATH FOR PHYSICISTS</div>
+                    <div class="course border-yellow" onclick="goToSubject('Electronic Circuit')">Electronic Circuit</div>
+                    <div class="course border-yellow" onclick="goToSubject('Electronic Lab')">Electronic Lab</div>
+                    <div class="course border-yellow" id="emag" onclick="goToSubject('Electromagnetic Fields')">Electromagnetic Fields</div>
+                    <div class="course border-yellow" onclick="goToSubject('SENSORS AND TRANSDUCERS')">SENSORS AND TRANSDUCERS</div>
+                    <div class="course border-blue" id="microcon" onclick="goToSubject('Microcontroller and Interfacing')">Microcontroller and Interfacing</div>
+                    <div class="course border-yellow" onclick="goToSubject('Intermediate Physics Lab 1')">Intermediate Physics Lab 1</div>
+                    <div class="course border-blue" onclick="goToSubject('Principles of Communication')">Principles of Communication</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-yellow" onclick="goToSubject('INDUSTRIAL STATISTICS')">INDUSTRIAL STATISTICS</div>
+                    <div class="course border-yellow" onclick="goToSubject('Wave & Optics')">Wave & Optics</div>
+                    <div class="course border-yellow" onclick="goToSubject('Modern Physics')">Modern Physics</div>
+                    <div class="course border-blue" onclick="goToSubject('Digital Electronic Lab')">Digital Electronic Lab</div>
+                    <div class="course border-yellow" onclick="goToSubject('Mechanic')">Mechanic</div>
+                    <div class="course border-yellow" onclick="goToSubject('Intermediate Physics Lab 2')">Intermediate Physics Lab 2</div>
+                    <div class="course border-blue" onclick="goToSubject('Web and Mobile App Development')">Web and Mobile App Development</div>
+                    <div class="course border-blue" onclick="goToSubject('Interaction Design')">Interaction Design</div>
+                    <div class="course border-blue" onclick="goToSubject('IoT Networks and Data Communications')">IoT Networks and Data Communications</div>
+                    <div class="course border-orange" onclick="goToSubject('Team Project 2')">Team Project 2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y3">ปี 3</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-yellow" onclick="goToSubject('Chemistry')">Chemistry</div>
+                    <div class="course border-yellow" onclick="goToSubject('Chemistry Lab')">Chemistry Lab</div>
+                    <div class="course border-yellow" onclick="goToSubject('Thermal Physics')">Thermal Physics</div>
+                    <div class="course border-yellow" onclick="goToSubject('Physics and Semiconductor')">Physics and Semiconductor</div>
+                    <div class="course border-yellow" onclick="goToSubject('SEMINAR')">SEMINAR</div>
+                    <div class="course border-yellow" onclick="goToSubject('INDUSTRIAL PHYSICS LAB 1')">INDUSTRIAL PHYSICS LAB 1</div>
+                    <div class="course border-blue" onclick="goToSubject('Artificial Intelligence')">Artificial Intelligence</div>
+                    <div class="course border-blue" onclick="goToSubject('MAJOR ELECTIVE 1')">MAJOR ELECTIVE 1</div>
+                    <div class="course border-blue" onclick="goToSubject('MAJOR ELECTIVE 2')">MAJOR ELECTIVE 2</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2 (ฝึกงาน)</div>
+                    <div class="course border-yellow" onclick="goToSubject('Quantum Mechanic & Technology')">Quantum Mechanic & Technology</div>
+                    <div class="course border-yellow" onclick="goToSubject('Measurement and Instrumentation')">Measurement and Instrumentation</div>
+                    <div class="course border-yellow" onclick="goToSubject('INDUSTRIAL PHYSICS LAB 2')">INDUSTRIAL PHYSICS LAB 2</div>
+                    <div class="course border-blue" onclick="goToSubject('MAJOR ELECTIVE 3')">MAJOR ELECTIVE 3</div>
+                    <div class="course border-blue" onclick="goToSubject('Elective 1')">Elective 1</div>
+                    <div class="course border-blue" onclick="goToSubject('Industrial IoT')">Industrial IoT</div>
+                    <div class="course border-blue" onclick="goToSubject('Cyber Security')">Cyber Security</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed (LANG)')">Gen-Ed (LANG)</div>
+                    <div class="course border-orange" onclick="goToSubject('Team Project 3')">Team Project 3</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-column">
+            <div class="year-header y4">ปี 4</div>
+
+            <div class="plan-divider">Plan 1: Project</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-gray" onclick="goToSubject('Project 1')">Project 1</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 2')">Elective 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 1')">Free Elective 1</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Project 2')">Project 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 3')">Elective 3</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 2')">Free Elective 2</div>
+                </div>
+            </div>
+
+            <div class="plan-divider">Plan 2: Co-op</div>
+            <div class="terms-container">
+                <div class="term-column">
+                    <div class="term-header">เทอม 1</div>
+                    <div class="course border-gray" style="height: 100%;" onclick="goToSubject('Co-Operative / Study Abroad')">Co-Operative /<br>Study Abroad</div>
+                </div>
+                <div class="term-column">
+                    <div class="term-header">เทอม 2</div>
+                    <div class="course border-orange" onclick="goToSubject('Gen-Ed')">Gen-Ed</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 2')">Elective 2</div>
+                    <div class="course border-gray" onclick="goToSubject('Elective 3')">Elective 3</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 1')">Free Elective 1</div>
+                    <div class="course border-gray" onclick="goToSubject('Free Elective 2')">Free Elective 2</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="legend-container">
+        <div class="legend-item">
+            <div class="legend-box bg-yellow"></div> วิชาทางฟิสิกส์
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-blue"></div> วิชา IoT / คอมพิวเตอร์
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-orange"></div> วิชาศึกษาทั่วไป / พื้นฐาน
+        </div>
+        <div class="legend-item">
+            <div class="legend-box bg-gray"></div> วิชาเลือก / โปรเจกต์ / ฝึกงาน
+        </div>
+    </div>
+
+    <div class="info-box" style="padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); margin-top: 20px; background-color: var(--box-bg);">
+        <h2 style="margin-top: 0; color: #ffffff; text-shadow: 0 0 5px #b829ff, 0 0 15px #b829ff; text-align: center;">หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมคอมพิวเตอร์</h2>
+        <p><strong>จำนวนหน่วยกิตรวมตลอดหลักสูตร:</strong> ไม่น้อยกว่า 135 หน่วยกิต</p>
+        <p><strong>โครงสร้างหลักสูตร:</strong></p>
+        <ul style="margin-bottom: 0; line-height: 1.8;">
+            <li>หมวดวิชาศึกษาทั่วไป 30 หน่วยกิต</li>
+            <li>หมวดวิชาเฉพาะ 99 หน่วยกิต (วิชาแกน, วิชาเอกบังคับ, วิชาเอกเลือก)</li>
+            <li>หมวดวิชาเลือกเสรี 6 หน่วยกิต</li>
+        </ul>
+    </div>
+
+    <script src="FontOpen1.js"></script>
+</body>
+</html>

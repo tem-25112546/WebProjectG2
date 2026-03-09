@@ -1,0 +1,166 @@
+:root {
+    --bg-dark: #0d0d12;
+    --box-bg: #1a1a24;
+    --text-light: #e0e0e0;
+    --neon-purple: #b829ff;
+    --neon-blue: #00e5ff;
+}
+
+body {
+    font-family: 'Sarabun', 'Segoe UI', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+}
+
+/* Animation ไฟวิ่งสลับสีสไตล์ Cyberpunk */
+@keyframes neon-border-run {
+    0% { border-color: var(--neon-purple); box-shadow: 0 0 5px var(--neon-purple); }
+    50% { border-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
+    100% { border-color: var(--neon-purple); box-shadow: 0 0 5px var(--neon-purple); }
+}
+
+.main-header {
+    background-color: var(--box-bg);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border-bottom: 3px solid var(--neon-purple);
+    animation: neon-border-run 4s linear infinite;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.btn-back-home {
+    background-color: var(--box-bg);
+    color: #fff;
+    border: 1px solid var(--neon-purple);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-back-home:hover {
+    background-color: var(--neon-purple);
+    box-shadow: 0 0 15px var(--neon-purple);
+}
+
+.header-title {
+    flex-grow: 1;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 10px var(--neon-purple), 0 0 20px var(--neon-purple);
+    margin-right: 80px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.instruction {
+    text-align: center;
+    color: var(--neon-purple);
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.subject-item {
+    background: var(--box-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.subject-item:hover {
+    border-color: var(--neon-purple);
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(184, 41, 255, 0.4);
+}
+
+.subject-item input[type="checkbox"] {
+    accent-color: var(--neon-purple);
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.analyze-btn {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 50px auto;
+    padding: 15px;
+    background: transparent;
+    color: white;
+    border: 2px solid var(--neon-purple);
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    animation: neon-border-run 2s linear infinite;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.analyze-btn:hover {
+    background: var(--neon-purple);
+    color: black;
+    box-shadow: 0 0 40px var(--neon-purple);
+}
+
+.career-card {
+    background: var(--box-bg);
+    padding: 25px;
+    border-radius: 12px;
+    border-left: 6px solid var(--neon-purple);
+    margin-bottom: 25px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    animation: fadeIn 0.6s ease;
+}
+
+.career-name {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--neon-purple);
+}
+
+.career-desc {
+    background: #222230;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 12px;
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.match-score {
+    margin-top: 15px;
+    color: var(--neon-purple);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
