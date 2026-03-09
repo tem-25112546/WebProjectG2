@@ -1,0 +1,599 @@
+html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+}/* GRADIENT AND LAYER BLUR EFFECT */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: black;
+    color: #e7e7e7;
+    min-height: 100vh;
+    line-height: 1.5;
+    font-family: 'Prompt', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* GRADIENT AND LAYER BLUR EFFECT */
+.image-gradient {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.layer-blur {
+    height: 0;
+    width: 30rem;
+    position: absolute;
+    top: 20%;
+    right: 0;
+    box-shadow: 0 0 700px 15px#db52fd;
+    rotate: -30deg;
+    z-index: -1;
+}
+/* CONTAINER */
+.container{
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* HEADER */
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5rem;
+}
+
+header h1{
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 300;
+    
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-left: -5%;
+}
+
+nav a {
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    transition: color 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+nav a:hover{
+    color: #a7a7a7;
+}
+
+.nav-container .links a:hover{
+    color: #db52fd;
+    border-botton: 2px solid #db52fd;
+}
+
+nav a:hover {
+    color: #b711e0;
+    text-decoration: underline; /* เพิ่มเส้นใต้ */
+    text-underline-offset: 6px; /* ขยับเส้นใต้ให้ห่างจากตัวหนังสือลงมาหน่อย จะได้สวยๆ */
+}
+
+.btn-signing {
+    background-color: #a7a7a7;
+    color: black;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-signing {
+    background-color: #a7a7a7;
+    color: black;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-signing:hover {
+    background-color: white;
+}
+
+/* MAIN CONTENT */
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(90vh - 6rem);
+}
+
+.content{
+    max-width: 40rem;
+    margin-left: 10%;
+    z-index: 999;
+    position: relative; 
+    z-index: 100;
+    
+}
+
+.tag-box{
+    position: relative;
+    width: 18rem;
+    height: 2.5rem;
+    border-radius: 50px;
+    background: linear-gradient(to right, #656565, #7f42a7, #6600c5,#5300a0,#757575,#656565);
+    background-size: 200%;
+    animation: animationGradient 2.5s linear infinite;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+
+
+@keyframes animationGradient {
+    to{
+        background-position: 200%;
+    }
+}
+
+.tag-box .tag{
+    position: absolute;
+    inset: 3px 3px 3px 3px;
+    background-color: black;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.tag-box .tag:hover{
+    color: #db52fd;
+}
+
+.content h1 {
+    font-size: 4rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin: 2rem 0;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(128, 128, 128, 0.418);
+}
+
+.description {
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    max-width: 35rem;
+    color: #76638b;
+}
+
+.buttons{
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.btn-get-started{
+    text-decoration: none;
+    border: 1px solid #2a2a2a;
+    padding: 0.7rem 1.2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: background-color 0.2s ease;
+}
+
+.btn-signing:hover{
+    background-color:gray;
+}
+
+.btn-signing-main {
+    text-decoration: none;
+    background-color: lightgray;
+    color: black;
+    padding: 0.6rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    transition: background-color 0.2s ease;
+}
+
+.robot-3d{
+    position: absolute;
+    top: 0;
+    right: -20%;
+}
+/* กำหนดขนาดและกรอบของพื้นที่ 3D */
+.spline-container {
+  position: relative;
+  width: 100%;
+  height: 500px; /* สามารถปรับความสูงได้ตามความต้องการของเว็บ */
+  background-color: #000000; /* สีพื้นหลังกลืนไปกับโมเดล */
+  border-radius: 12px; /* ลบมุมให้ดูโค้งมน ทันสมัย */
+  overflow: hidden;
+}
+
+/* เอาไว้ลบพื้นหลังใสๆ ของตัว Spline Viewer ออก (ถ้ามี) */
+spline-viewer {
+  width: 100%;
+  height: 100%;
+}
+
+/* สไตล์สำหรับกล่องข้อความเครดิต */
+/* สไตล์สำหรับกล่องข้อความเครดิต */
+.spline-credit {
+    position: fixed; /* เปลี่ยนจาก absolute เป็น fixed เพื่อให้ล็อกติดมุมหน้าจอเสมอ */
+    bottom: 20px;    /* ระยะห่างจากขอบล่าง */
+    left: 20px;      /* ระยะห่างจากขอบซ้าย */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6); 
+    background-color: rgba(0, 0, 0, 0.4); 
+    padding: 6px 12px;
+    border-radius: 6px;
+    z-index: 9999; /* ตั้งค่า z-index ให้สูงมากๆ เพื่อให้อยู่บนสุดและไม่โดนส่วนอื่นทับ */
+    backdrop-filter: blur(4px); 
+}
+
+/* สไตล์สำหรับลิงก์ที่กดได้ */
+.spline-credit a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+/* เวลาเอาเมาส์ไปชี้ที่ลิงก์ ให้เปลี่ยนเป็นสีม่วงอ่อนๆ (ให้เข้ากับแสงของโมเดล) */
+.spline-credit a:hover {
+  color: #d6b4fc; 
+}
+
+
+
+/* TABLET RESPONSIVE */
+@media (max-width: 1300px){
+    header{
+        padding: 1rem 0.5rem;
+    }
+
+    .content{
+        margin-top: 85%;
+    }
+
+    .robot-3d{
+        scale: 0.8;
+        top: -20%;
+        right: 2%;
+    }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px){
+
+    header{
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        gap: 15px;
+    }
+
+    nav{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    nav a{
+        font-size: 0.85rem;
+    }
+
+    header h1{
+        font-size: 2rem;
+    }
+
+    .btn-signing{
+        padding: 0.6rem 1.5rem;
+    }
+
+    .content{
+        margin-top: 25rem;
+    }
+
+    .robot-3d{
+        scale: 0.5;
+        top: -25%;
+        right: 0;
+    }
+
+    .content{
+        max-width: 30rem;
+        margin-left: 10%;
+    }
+
+    .tag-box{
+        width: 12rem;
+    }
+
+    .content h1{
+        font-size: 2.5rem;
+    }
+
+    .description{
+        font-size: 1rem;
+    }
+
+    .btn-get-started{
+        font-size: 0.8rem;
+        padding: 0.8rem 1.2rem;
+    }
+
+    .btn-signing-main{
+        font-size: 0.8rem;
+        padding: 0.8rem 2rem;
+    }
+}
+
+header {
+    /* ของเดิมมีอะไรอยู่ ปล่อยไว้เหมือนเดิม แล้วเพิ่ม 2 บรรทัดนี้เข้าไปครับ */
+    position: relative;
+    z-index: 999; 
+}
+
+/* การตั้งค่า Slider Section */
+/* ป้องกันหน้าเว็บล้นออกแนวนอน */
+
+
+/* === ส่วนของ Image Slider === */
+.slider-section {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+
+.slider-container {
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 500px;
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ปุ่มเลื่อนซ้าย-ขวา */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(30, 30, 40, 0.7);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+    z-index: 10;
+}
+
+.slider-btn:hover {
+    background-color: #b829ff;
+}
+
+.prev-btn { left: 20px; }
+.next-btn { right: 20px; }
+
+/* จุดไข่ปลา (Dots) ด้านล่างรูป */
+.slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background-color: #ffffff;
+}
+
+/* === ส่วนของ Footer === */
+.site-footer {
+    background-color: #0b0121;
+    padding: 60px 0 20px;
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between; /* คำสั่งนี้จะช่วยผลัก 2 ส่วนให้อยู่ห่างกันซ้าย-ขวาสุด */
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* ใส่คำสั่งนี้ให้กับกล่องที่ครอบ ที่อยู่/เบอร์โทร/อีเมล */
+.footer-contact-col { /* หรือคลาสที่คุณใช้ครอบ ul.footer-contact */
+    margin-left: auto; /* 🌟 คำสั่งพระเอก: จะทำหน้าที่เหมือนสปริงดันกล่องนี้ไปชิดขวาสุดทันที 🌟 */
+    text-align: left; /* จัดตัวหนังสือให้ชิดซ้ายในกล่องของตัวเอง */
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.brand-icon {
+    background-color: #7b42f6;
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.brand-text h2 {
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+.brand-text p {
+    font-size: 12px;
+    color: #a0a0b5;
+}
+
+.footer-desc {
+    color: #a0a0b5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.footer-contact li {
+    list-style: none;
+    color: #a0a0b5;
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.5;
+}
+
+.footer-contact li i {
+    color: #7b42f6;
+    margin-right: 15px;
+    margin-top: 4px;
+}
+
+.footer-links h3 {
+    font-size: 16px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: #a0a0b5;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: #a0a0b5;
+    font-size: 13px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: #a0a0b5;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.social-icons a:hover {
+    border-color: #7b42f6;
+    color: #ffffff;
+    background-color: rgba(123, 66, 246, 0.1);
+}
+
+.bottom-links a {
+    color: #a0a0b5;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.bottom-links a:hover {
+    color: #ffffff;
+}

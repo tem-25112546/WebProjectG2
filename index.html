@@ -1,0 +1,141 @@
+<!DOCTYPE html><!-- เขียนด้วย HTML -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><!-- ตั้งค่าให้เว็บรองรับตัวอักษรได้ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- ตั้งค่าให้เว็บของเป็นแบบ Responsive-->
+    <title>Document</title><!-- ชื่อของหน้าเว็บที่จะไปแสดงอยู่บน Tab ด้านบนสุดของเบราว์เซอร์ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><!-- เป็นการเชื่อมต่อไฟล์ CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <img src="gradient.png" alt="gradient" class="image-gradient">
+    <div class="layer-blur"></div><!-- สร้างกล่องสี่เหลี่ยมเปล่าๆ ขึ้นมา -->
+    
+
+    <div class="container">
+        <header>
+            <h1 class="logo">IoT KMITL</h1>
+
+            <nav>
+            <a href="./Ozone/faculty/faculty-/faculty.html">FACULTY</a>
+            <a href="./Numpu/About_PhysIoT.html">ABOUT IoT</a>
+            <a href="./Palm/admission/admission-main/Admission.html">ADMISSION</a>
+            <a href="./Palm/contact/contact-main/contact.html">CONTACT</a>
+            </nav>
+
+            
+        </header>
+
+        <div class="content"><!-- ครอบและจัดระเบียบเนื้อหาหรือปุ่มต่างๆ ให้อยู่รวมกันเป็นหมวดหมู่ --> 
+                    <div class="tag-box">
+            <div class="tag" onclick="window.open('./Ozone/chatbot/chatbot-main/chatbot.html', '_blank')" style="cursor: pointer;">
+                <i class="fa-brands fa-kakao-talk"></i>Chat With Me
+            </div> 
+        </div>
+
+            <h1>SHAPE YOUR<br>FURTURE <br>WITH US</h1>
+            
+
+            <p class="description">
+                บูรณาการองค์ความรู้ทั้ง 3 ด้าน คือด้านฮาร์ดแวร์และซอฟต์แวร์ (Hardware & Software) โดยการศึกษาและพัฒนาอุปกรณ์อัจฉริยะและเขียนโปรแกรมเพื่อควบคุมระบบ
+                ด้านการสื่อสารและเครือข่าย (Network & Communication) รวมถึง ด้านปัญญาประดิษฐ์และข้อมูล (AI & Big Data) นอกจากนี้ยังมีโครงการเรียนควบ 2 ปริญญา (Dual Degree) ร่วมกับคณะวิทยาศาสตร์ โดยผู้เรียนจะได้รับทั้งวุฒิ วิศวกรรมระบบไอโอทีฯ (วศ.บ.) และ ฟิสิกส์อุตสาหกรรม (วท.บ.)
+            </p>
+
+            
+        </div>
+
+        <spline-viewer class="robot-3d" url="https://prod.spline.design/MZmcEKFJN6rfSL4w/scene.splinecode"></spline-viewer>
+
+
+    </div>
+    
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.67/build/spline-viewer.js"></script>
+
+
+    
+   
+        
+
+  
+
+  <!-- ล่าง -->
+
+  <section class="slider-section">
+        <div class="slider-container">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slide"><img src="images/อาคาร 2.jpg" alt="Library 1"></div>
+                <div class="slide"><img src="images/เรียน 3.jpg" alt="Library 2"></div>
+                <div class="slide"><img src="images/เรียน iot.jpg" alt="Library 3"></div>
+                <div class="slide"><img src="images/เรียน 2.jpg" alt="Library 4"></div>
+               
+            </div>
+
+            <button class="slider-btn prev-btn" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next-btn" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+
+            <div class="slider-dots" id="sliderDots">
+            </div>
+        </div>
+    </section>
+
+    <div style="flex-grow: 1;"></div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-info">
+                    <div class="footer-brand">
+                        <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="brand-text">
+                            <h2>Faculty of Engineering</h2>
+                            <p>Department of IoT and Information Engineering, KMITL</p>
+                        </div>
+                    </div>
+                    <p class="footer-desc">ภาควิชาวิศวกรรมไอโอทีและสารสนเทศ คณะวิศวกรรมศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
+                    
+                </div>
+
+
+    <div class="footer-contact-col">
+        <ul class="footer-contact">
+            <li><i class="fas fa-map-marker-alt"></i> 1 Chalongkrung Rd,<br>Ladkrabang, Bangkok 10520</li>
+            <li><i class="fas fa-home"></i> https://www.kmitl.ac.th</li>
+            <li><i class="fas fa-phone-alt"></i> 02 329 8000</li>
+            <li><i class="far fa-envelope"></i> iote@kmitl.ac.th</li>
+           
+        </ul>
+       <div class="social-icons">
+    <a href="https://www.facebook.com/IOTE.KMITL" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    
+    <a href="https://www.instagram.com/kmitl.iote.official" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i>
+    </a>
+    
+    <a href="https://youtube.com/@iote_kmitl?si=AwJ1ImbdakSA0pUt" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i>
+    </a>
+</div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                   
+                </div>
+                
+                
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+<!-- credit -->
+  <div class="spline-credit">
+    Base 3D design by <a href="https://app.spline.design/@victorgg" target="_blank">victorgg</a> 
+    / Remixed by PHYS IoT
+  </div>
+
+</body>
+</html>
